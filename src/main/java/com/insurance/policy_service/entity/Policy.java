@@ -5,7 +5,6 @@ import com.insurance.policy_service.dto.PolicyType;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcType;
-import org.hibernate.annotations.Type;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.time.Instant;
@@ -13,6 +12,7 @@ import java.util.UUID;
 
 @Entity
 public class Policy extends PanacheEntityBase {
+    /*TODO: Find a better auto-generated and unique solution than UUID, as UUID is not human friendly, respectively easy readable*/
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "policy_number")

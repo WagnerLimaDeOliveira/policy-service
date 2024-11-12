@@ -1,7 +1,6 @@
 package com.insurance.policy_service.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import com.insurance.policy_service.dto.PolicyRequest;
 import com.insurance.policy_service.dto.PolicyUpdate;
 import com.insurance.policy_service.entity.Policy;
@@ -49,6 +48,6 @@ public class CustomerPolicyController {
     @Consumes(MediaType.APPLICATION_JSON)
     public long deletePolicy(@PathParam("customerId") Long customerId,
                              @PathParam("policyNumber") UUID policyNumber) throws JsonProcessingException {
-     return policyService.deletePolicy(customerId, policyNumber);
+        return policyService.deletePolicy(customerId, policyNumber);
     }
 }

@@ -32,21 +32,20 @@ public class PolicyService {
     @Channel("deleted-policy-events")
     Emitter<String> deletedPolicyEmitter;
 
-    /*TODO: A customer can have multiple Policies*/
-    public List<Policy> getPoliciesByCustomerId(Long customerId){
-       return policyRepository.find("customerId", customerId).stream().toList();
+    public List<Policy> getPoliciesByCustomerId(Long customerId) {
+        return policyRepository.find("customerId", customerId).stream().toList();
     }
 
-    /* TODO: Policy is created directly here but after creating policy number is send per KAFKA to Customer to update CustomerPolicies table */
     @Transactional
     public Policy createPolicy(Long customerId, PolicyRequest policyRequest) throws JsonProcessingException {
         Policy policy = new Policy();
-        if(customerId != null) {
+        if (customerId != null) {
             policy.setCustomerId(customerId);
             policy.setStartDate(policyRequest.startDate);
             policy.setEndDate(policyRequest.endDate);
             policy.setPremium(policyRequest.premium);
             policy.setStatus(policyRequest.policyStatus);
+            policy.setPolicyType(policyRequest.policyType);
             policyRepository.persist(policy);
             CustomerPolicy customerPolicy = new CustomerPolicy(customerId, policy.getPolicyNumber());
             policyEmitter.send(objectMapper.writeValueAsString(customerPolicy));
@@ -59,7 +58,7 @@ public class PolicyService {
     /*TODO: Add Logic to only Update fields which were Updated **/
     @Transactional
     public Policy updatePolicy(Long customerId, String policyNumber, PolicyUpdate policyUpdate) {
-        if(customerId != null && policyNumber != null) {
+        if (customerId != null && policyNumber != null) {
             Policy updatedPolicy = new Policy();
             updatedPolicy.setStartDate(policyUpdate.startDate);
             updatedPolicy.setEndDate(policyUpdate.endDate);

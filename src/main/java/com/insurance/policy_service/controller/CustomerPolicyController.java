@@ -29,7 +29,7 @@ public class CustomerPolicyController {
     @Path("{customerId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Policy createPolicy(@PathParam("customerId") Long customerId, PolicyRequest policyRequest) throws JsonProcessingException {
+    public Policy requestPolicyByCustomerId(@PathParam("customerId") Long customerId, PolicyRequest policyRequest) throws JsonProcessingException {
         return policyService.createPolicy(customerId, policyRequest);
     }
 
